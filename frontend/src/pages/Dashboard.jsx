@@ -46,11 +46,11 @@ function Dashboard() {
       try {
         let res;
         if (user.role === "jobseeker") {
-          res = await axios.get("http://localhost:3000/api/dashboard/jobseeker", {
+          res = await axios.get("https://careerconnect-d6ke.onrender.com/api/dashboard/jobseeker", {
             params: { userId: user._id },
           });
         } else if (user.role === "recruiter") {
-          res = await axios.get("http://localhost:3000/api/dashboard/recruiter", {
+          res = await axios.get("https://careerconnect-d6ke.onrender.com/api/dashboard/recruiter", {
             params: { recruiterId: user._id },
           });
         }
@@ -69,7 +69,7 @@ function Dashboard() {
   // ---------------- UPDATE APPLICATION STATUS ----------------
   const updateStatus = async (applicationId, newStatus, applicantId) => {
     try {
-      await axios.put(`http://localhost:3000/api/application/status/${applicationId}`, {
+      await axios.put(`https://careerconnect-d6ke.onrender.com/api/application/status/${applicationId}`, {
         status: newStatus,
       });
 
@@ -97,7 +97,7 @@ function Dashboard() {
   const handleDeleteJob = async (jobId) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
     try {
-      await axios.delete(`http://localhost:3000/api/jobs/${jobId}?recruiterId=${user._id}`);
+      await axios.delete(`https://careerconnect-d6ke.onrender.com/api/jobs/${jobId}?recruiterId=${user._id}`);
       setDashboardData((prev) => prev.filter((job) => job._id !== jobId));
       toast.success("Job deleted successfully");
     } catch (err) {

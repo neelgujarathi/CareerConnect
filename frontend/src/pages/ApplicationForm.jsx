@@ -52,7 +52,7 @@ function ApplicationForm() {
     data.append("resume", formData.resume);
 
     try {
-      await axios.post("http://localhost:3000/api/apply", data, {
+      await axios.post("https://careerconnect-d6ke.onrender.com/api/apply", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("✅ Application submitted successfully!", {

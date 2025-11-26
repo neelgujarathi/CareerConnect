@@ -10,7 +10,7 @@ function MainContent() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-       const res = await axios.get("http://localhost:5000/api/jobs");
+       const res = await axios.get("https://careerconnect-d6ke.onrender.com/api/jobs");
         setJobs(res.data.data || []); 
       } catch (err) {
         console.error("Error fetching jobs:", err);

@@ -19,12 +19,12 @@ function JobListingPage() {
       let res;
 
       if (search) {
-        res = await axios.get("http://localhost:3000/api/jobs/search", {
+        res = await axios.get("https://careerconnect-d6ke.onrender.com/api/jobs/search", {
           params: { query, location },
         });
         setJobs(res.data);
       } else {
-        res = await axios.get("http://localhost:3000/api/jobs");
+        res = await axios.get("https://careerconnect-d6ke.onrender.com/api/jobs");
         setJobs(res.data.data || []);
       }
     } catch (err) {

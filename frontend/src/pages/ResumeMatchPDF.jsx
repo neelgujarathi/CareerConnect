@@ -26,7 +26,7 @@ function ResumeMatchPDF() {
       formData.append("jobDescription", jobDescription);
 
       const res = await axios.post(
-        "http://localhost:3000/api/ai/resume-match",
+        "https://careerconnect-d6ke.onrender.com/api/ai/resume-match",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

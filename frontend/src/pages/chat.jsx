@@ -13,7 +13,7 @@ function ChatPage() {
   useEffect(() => {
     const fetchReceiver = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/users/${receiverId}`);
+        const res = await axios.get(`https://careerconnect-d6ke.onrender.com/api/users/${receiverId}`);
         setReceiver(res.data);
       } catch (err) {
         console.error(err);
@@ -25,7 +25,7 @@ function ChatPage() {
   const fetchMessages = async () => {
     if (!user) return;
     try {
-      const res = await axios.get("http://localhost:3000/api/messages/conversation", {
+      const res = await axios.get("https://careerconnect-d6ke.onrender.com/api/messages/conversation", {
         params: { user1: user._id, user2: receiverId, jobId },
       });
       setMessages(res.data);
@@ -44,7 +44,7 @@ function ChatPage() {
   const sendMessage = async () => {
     if (!input.trim()) return;
     try {
-      await axios.post("http://localhost:3000/api/messages/send", {
+      await axios.post("https://careerconnect-d6ke.onrender.com/api/messages/send", {
         senderId: user._id,
         receiverId,
         jobId,

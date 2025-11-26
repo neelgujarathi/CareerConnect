@@ -21,7 +21,7 @@ function SalaryGuidance() {
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:3000/api/ai/salary-guidance", {
+      const res = await axios.post("https://careerconnect-d6ke.onrender.com/api/ai/salary-guidance", {
         role,
         experience,
         companyType,

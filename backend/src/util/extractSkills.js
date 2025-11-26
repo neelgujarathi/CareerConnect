@@ -2,7 +2,6 @@ const fs = require("fs");
 const pdfParse = require("pdf-parse");
 const docx = require("docx");
 
-// Predefined skill list (expand as needed)
 const SKILLS_LIST = [
   "JavaScript", "React", "Node.js", "Python", "Java",
   "C++", "HTML", "CSS", "SQL", "MongoDB", "AWS"

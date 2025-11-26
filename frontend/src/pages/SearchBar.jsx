@@ -13,7 +13,7 @@ function SearchBar() {
   const handleSearch = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:3000/api/jobs/search", {
+      const res = await axios.get("https://careerconnect-d6ke.onrender.com/api/jobs/search", {
         params: { query, location },
       });
       setResults(res.data);

@@ -67,7 +67,7 @@ function Postjob() {
         recruiterId: user._id,
       };
 
-      const res = await axios.post("http://localhost:3000/api/jobs", payload);
+      const res = await axios.post("https://careerconnect-d6ke.onrender.com/api/jobs", payload);
       socket.emit("sendNotification", {
         message: `💼 New Job Posted: ${formData.jobname} at ${formData.companyname}`,
       });

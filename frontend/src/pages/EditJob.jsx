@@ -36,7 +36,7 @@ function EditJob() {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/jobs/${jobId}`);
+        const res = await axios.get(`https://careerconnect-d6ke.onrender.com/api/jobs/${jobId}`);
         setJob(res.data.data);
         setLoading(false);
       } catch (err) {
@@ -54,7 +54,7 @@ function EditJob() {
   // ---------------- HANDLE UPDATE ----------------
   const handleSubmit = async () => {
     try {
-      await axios.put(`http://localhost:3000/api/jobs/${jobId}`, {
+      await axios.put(`https://careerconnect-d6ke.onrender.com/api/jobs/${jobId}`, {
         recruiterId: job.recruiterId,
         ...job,
       });

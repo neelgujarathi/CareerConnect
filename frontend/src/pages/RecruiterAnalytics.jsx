@@ -25,7 +25,7 @@ function RecruiterAnalytics() {
 
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/dashboard/recruiter/analytics`, {
+        const res = await axios.get(`https://careerconnect-d6ke.onrender.com/api/dashboard/recruiter/analytics`, {
           params: { recruiterId: user._id },
         });
         setJobsData(res.data);

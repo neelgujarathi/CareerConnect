@@ -14,7 +14,7 @@ function JobAIForm() {
     setError("");
     setResult("");
     try {
-      const res = await axios.post("http://localhost:3000/api/ai/generate-jobdesc", {
+      const res = await axios.post("https://careerconnect-d6ke.onrender.com/api/ai/generate-jobdesc", {
         role, skills, experience, perks
       });
       setResult(res.data.result);

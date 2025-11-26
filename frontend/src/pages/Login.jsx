@@ -41,7 +41,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/login", {
+      const res = await axios.post("https://careerconnect-d6ke.onrender.com/api/auth/login", {
         emailOrUsername,
         password,
       });

@@ -16,7 +16,7 @@ function JobAIHelper() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/ai/summarize-jobdesc", { jobDescription });
+      const res = await axios.post("https://careerconnect-d6ke.onrender.com/api/ai/summarize-jobdesc", { jobDescription });
       setSummary(res.data.result);
     } catch (err) {
       console.error("Frontend error:", err);
@@ -33,7 +33,7 @@ function JobAIHelper() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/ai/interview-questions", { jobDescription });
+      const res = await axios.post("https://careerconnect-d6ke.onrender.com/api/ai/interview-questions", { jobDescription });
       setQuestions(res.data.result);
     } catch (err) {
       console.error("Frontend error:", err);
