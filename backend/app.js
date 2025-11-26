@@ -14,21 +14,31 @@ const aiRoutes = require("./src/routes/aiRoutes.js");
 const messageRoutes = require("./src/routes/messageRoutes.js");
 
 const app = express();
+app.use(express.json());
 const server = http.createServer(app);
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://careerconnect-project.onrender.com"
+];
 
 app.use(
   cors({
-    origin: ["https://careerconnect-project.onrender.com"],
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-app.use(express.json());
-
 const io = new Server(server, {
   cors: {
-    origin: ["https://careerconnect-project.onrender.com"],
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true,
   },
