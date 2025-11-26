@@ -1,0 +1,66 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.nav
+{
+    display: flex;
+    background-color: rgb(28, 51, 221);
+}
+
+.nav .logo img
+{
+    margin: 5px;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+.nav a{
+    color: white;
+    margin: 10px;
+    margin-left: 40px;
+    position: relative;
+    top: 1rem;
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.nav .login
+{
+    position: relative;
+    top: 0.7rem;
+    left: 23rem;
+}
+
+.proname
+{
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    position: relative;
+    top: 16px;
+    margin-left: 15px;
+}
+
+.logout
+{
+    position: relative;
+    top: 15px;
+    margin-left: 25px;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    background-color: #f11b0cff;
+    color: white;
+}
+
+.RL
+{
+    position: absolute;
+    left: 250px !important;
+}

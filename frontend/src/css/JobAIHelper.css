@@ -1,0 +1,70 @@
+.helper-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
+  padding: 40px 20px;
+}
+
+.helper-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+}
+
+.helper-textarea {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+.helper-textarea:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 10px rgba(111, 66, 193, 0.2);
+  outline: none;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #6f42c1, #8e2de2);
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #8e2de2, #6f42c1);
+  transform: translateY(-2px);
+}
+
+.btn-success {
+  background: linear-gradient(90deg, #28a745, #20c997);
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+}
+
+.result-box {
+  background-color: #f3f0ff;
+  padding: 20px;
+  border-radius: 12px;
+  font-family: "Roboto Slab", serif;
+  font-weight: 600;
+  color: #3c096c;
+  line-height: 1.6;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.result-box pre {
+  white-space: pre-wrap;
+  margin: 0;
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #3c096c;
+}

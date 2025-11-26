@@ -1,0 +1,63 @@
+.salary-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
+  padding: 40px 20px;
+}
+
+.salary-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+}
+
+.salary-input {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+.salary-input:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 10px rgba(111, 66, 193, 0.2);
+  outline: none;
+}
+
+.salary-btn {
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #6f42c1, #8e2de2);
+  border: none;
+  transition: all 0.3s;
+}
+
+.salary-btn:hover {
+  background: linear-gradient(90deg, #8e2de2, #6f42c1);
+  transform: translateY(-2px);
+}
+
+.salary-result {
+  background-color: #f3f0ff;
+  padding: 20px;
+  border-radius: 12px;
+  font-family: "Roboto Slab", serif;
+  font-weight: 600;
+  color: #3c096c;
+  line-height: 1.6;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.salary-result pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #3c096c;
+}

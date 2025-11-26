@@ -1,0 +1,26 @@
+.status-badge {
+  display: inline-block;
+  font-size: 0.75rem; 
+  font-weight: 700;
+  border-radius: 5px;
+  padding: 5px;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  min-width: 70px;
+  text-align: center;
+}
+
+
+.status-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.analysis
+{
+  position: absolute !important;
+  top: 162px;
+  margin-left: 20px;
+}

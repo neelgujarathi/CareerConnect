@@ -1,0 +1,19 @@
+.form-control::placeholder {
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background-color: rgb(28, 51, 221) !important;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: rgb(28, 51, 221) !important;
+}
+
+.searchbar {
+  position: relative;
+  z-index: 10; 
+  margin-bottom: 20px;
+}

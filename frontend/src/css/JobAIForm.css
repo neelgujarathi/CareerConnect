@@ -1,0 +1,55 @@
+.jobai-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  padding: 20px;
+}
+
+.jobai-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.jobai-input {
+  padding: 12px 15px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+.jobai-input:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 8px rgba(111, 66, 193, 0.3);
+  outline: none;
+}
+
+.jobai-btn {
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #6f42c1, #8e2de2);
+  border: none;
+  transition: all 0.3s;
+}
+
+.jobai-btn:hover {
+  background: linear-gradient(90deg, #8e2de2, #6f42c1);
+  transform: translateY(-2px);
+}
+
+.jobai-result {
+  background-color: #f3f0ff;
+  padding: 20px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  font-family: "Roboto Slab", "Georgia", serif; 
+  font-weight: 600; 
+  color: #3c096c;
+  font-size: 1rem;
+  line-height: 1.6; 
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
