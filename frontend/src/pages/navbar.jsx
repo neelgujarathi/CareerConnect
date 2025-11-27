@@ -20,7 +20,7 @@ function Navbar() {
       <a href="/salary-guidance">Salary Guide</a>
       {user?.role === "recruiter" && <a href="/post-job">Post Job</a>}
       {user?.role === "recruiter" && <a href="/job-ai">Job Descriptor</a>}
-      <a href="/dashboard">My Dashboard</a>
+        {user && <a href="/dashboard">My Dashboard</a>}
 
       <div className="login">
         {user?.role === "jobseeker" && <a href="/ai-helper">AI Assistant</a>}
