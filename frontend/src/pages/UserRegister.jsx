@@ -3,6 +3,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../utils/socket";
+import "../css/UserRegister.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -80,7 +81,7 @@ function UserRegister() {
         <ul className="nav nav-tabs mb-4 justify-content-center">
           <li className="nav-item">
             <button
-              className={`nav-link ${role === "jobseeker" ? "active" : ""}`}
+              className={`nav-link ${role === "jobseeker" ? "active" : ""} navClick`}
               onClick={() => setRole("jobseeker")}
             >
               Register as Job Seeker
@@ -88,7 +89,7 @@ function UserRegister() {
           </li>
           <li className="nav-item">
             <button
-              className={`nav-link ${role === "recruiter" ? "active" : ""}`}
+              className={`nav-link ${role === "recruiter" ? "active" : ""} navClick`}
               onClick={() => setRole("recruiter")}
             >
               Register as Recruiter
@@ -105,6 +106,7 @@ function UserRegister() {
                 type="text"
                 className="form-control"
                 id="name"
+                placeholder="Enter your name"
                 value={userData.name}
                 onChange={handleChange}
                 required
@@ -119,6 +121,7 @@ function UserRegister() {
                 type="email"
                 className="form-control"
                 id="email"
+                placeholder="Enter your email"
                 value={userData.email}
                 onChange={handleChange}
                 required
@@ -133,6 +136,7 @@ function UserRegister() {
                 type="text"
                 className="form-control"
                 id="contact"
+                placeholder="Enter your contact no."
                 value={userData.contact}
                 onChange={handleChange}
                 required
@@ -147,6 +151,7 @@ function UserRegister() {
                   type="text"
                   className="form-control"
                   id="company"
+                  placeholder="Enter your company name"
                   value={userData.company}
                   onChange={handleChange}
                   required
@@ -162,6 +167,7 @@ function UserRegister() {
                 type="text"
                 className="form-control"
                 id="username"
+                placeholder="Enter your username"
                 value={userData.username}
                 onChange={handleChange}
                 required
@@ -176,6 +182,7 @@ function UserRegister() {
                 type="password"
                 className="form-control"
                 id="password"
+                placeholder="Enter your password"
                 value={userData.password}
                 onChange={handleChange}
                 required

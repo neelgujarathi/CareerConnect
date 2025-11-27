@@ -24,3 +24,16 @@
   top: 162px;
   margin-left: 20px;
 }
+
+.resumeMatcher
+{
+  text-decoration: none;
+  color: white;
+  position: relative;
+  left: 600px;
+  width: 150px;
+  height: 40px;
+  background-color: rgb(24, 54, 206);
+  padding: 5px;
+  border-radius: 10px;
+}

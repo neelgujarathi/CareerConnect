@@ -14,3 +14,17 @@ body {
     margin-bottom: 30px !important;
 }
 
+.wow
+{
+  display: flex;
+}
+
+.wow .hmm
+{
+  margin-right: 0px !important;
+}
+
+.wow .see
+{
+  margin-right: 240px;
+}

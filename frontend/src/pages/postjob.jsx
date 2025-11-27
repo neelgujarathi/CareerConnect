@@ -16,11 +16,13 @@ function Postjob() {
     description: "",
     requiredSkills: "",
   });
+  const [loading, setLoading] = useState(false); // ✅ loader state
 
   // ---------------- SOCKET CONNECTION ----------------
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
+
     socket.on("connect", () => socket.emit("registerUser", user._id));
     socket.on("receiveNotification", (data) => {
       toast.info(data.message, {
@@ -55,6 +57,10 @@ function Postjob() {
       return;
     }
 
+    if (loading) return; // ✅ prevent multiple clicks
+
+    setLoading(true); // start loader
+
     try {
       const skillsArray = formData.requiredSkills
         .split(",")
@@ -67,10 +73,22 @@ function Postjob() {
         recruiterId: user._id,
       };
 
-      const res = await axios.post("https://careerconnect-d6ke.onrender.com/api/jobs", payload);
+      await axios.post(
+        "https://careerconnect-d6ke.onrender.com/api/jobs",
+        payload
+      );
+
       socket.emit("sendNotification", {
         message: `💼 New Job Posted: ${formData.jobname} at ${formData.companyname}`,
       });
+
+      toast.success("✅ Job posted successfully!", {
+        position: "top-right",
+        autoClose: 2500,
+        theme: "colored",
+      });
+
+      // reset form
       setFormData({
         jobname: "",
         companyname: "",
@@ -87,10 +105,11 @@ function Postjob() {
         autoClose: 3000,
         theme: "colored",
       });
+    } finally {
+      setLoading(false); // stop loader
     }
   };
 
-  // ---------------- UI ----------------
   return (
     <div className="container mt-5">
       <ToastContainer />
@@ -99,6 +118,7 @@ function Postjob() {
 
         <form onSubmit={handleSubmit}>
           <div className="row">
+            {/* Job Name */}
             <div className="col-md-6 mb-3">
               <label htmlFor="jobname" className="form-label">
                 Enter Job Name:
@@ -110,8 +130,11 @@ function Postjob() {
                 placeholder="MERN Stack Developer, AI/ML Developer, Intern"
                 value={formData.jobname}
                 onChange={handleChange}
+                required
               />
             </div>
+
+            {/* Company Name */}
             <div className="col-md-6 mb-3">
               <label htmlFor="companyname" className="form-label">
                 Enter Company Name:
@@ -123,8 +146,11 @@ function Postjob() {
                 placeholder="Enter Company Name"
                 value={formData.companyname}
                 onChange={handleChange}
+                required
               />
             </div>
+
+            {/* Job Type */}
             <div className="col-md-6 mb-3">
               <label htmlFor="jobtype" className="form-label">
                 Enter Job Type:
@@ -136,8 +162,11 @@ function Postjob() {
                 placeholder="Remote, Full-Time, Internship, etc."
                 value={formData.jobtype}
                 onChange={handleChange}
+                required
               />
             </div>
+
+            {/* Location */}
             <div className="col-md-6 mb-3">
               <label htmlFor="location" className="form-label">
                 Enter Job Location:
@@ -149,8 +178,11 @@ function Postjob() {
                 placeholder="Enter Job Location or Remote"
                 value={formData.location}
                 onChange={handleChange}
+                required
               />
             </div>
+
+            {/* Salary */}
             <div className="col-md-6 mb-3">
               <label htmlFor="salary" className="form-label">
                 Enter Salary / Stipend:
@@ -162,8 +194,11 @@ function Postjob() {
                 placeholder="Enter Salary or Stipend"
                 value={formData.salary}
                 onChange={handleChange}
+                required
               />
             </div>
+
+            {/* Description */}
             <div className="col-md-6 mb-3">
               <label htmlFor="description" className="form-label">
                 Enter Description:
@@ -175,9 +210,11 @@ function Postjob() {
                 placeholder="Enter short job description"
                 value={formData.description}
                 onChange={handleChange}
+                required
               ></textarea>
             </div>
 
+            {/* Required Skills */}
             <div className="col-md-12 mb-3">
               <label htmlFor="requiredSkills" className="form-label">
                 Required Skills (comma-separated):
@@ -189,22 +226,42 @@ function Postjob() {
                 placeholder="e.g., React, Node.js, MongoDB, AWS"
                 value={formData.requiredSkills}
                 onChange={handleChange}
+                required
               />
               <small className="text-muted">
-                Separate multiple skills with commas. Example: React, Node.js,
-                MongoDB
+                Separate multiple skills with commas. Example: React, Node.js, MongoDB
               </small>
             </div>
           </div>
 
-          <div className="text-center mt-4">
-            <button type="submit" className="btn btn-primary px-5">
-              Post Job
+          {/* Buttons */}
+          <center>
+          <div className="text-center mt-4 wow">
+            <button
+              type="submit"
+              className="btn btn-primary px-5 d-flex align-items-center justify-content-center mx-auto hmm"
+              disabled={loading} // prevent double click
+              style={{ minWidth: "160px" }}
+            >
+              {loading ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Posting Job...
+                </>
+              ) : (
+                "Post Job"
+              )}
             </button>
-            <a href="/" className="btn btn-secondary px-5 ms-3">
+
+            <a href="/" className="btn btn-secondary px-5 ms-3 see">
               Back to Home
             </a>
           </div>
+          </center>
         </form>
       </div>
     </div>

@@ -139,6 +139,9 @@ function Dashboard() {
       {user.role === "jobseeker" && (
         <>
           <h5 className="fw-semibold mb-4">💼 Jobs You Applied For</h5>
+             <a href="/resume-match" className="mt-3 d-block text-center resumeMatcher">
+                Resume Matcher
+              </a>
           {dashboardData.length === 0 ? (
             <div className="alert alert-warning">
               You haven’t applied to any jobs yet.
@@ -200,9 +203,6 @@ function Dashboard() {
                   </div>
                 </div>
               ))}
-              <a href="/resume-match" className="mt-3 d-block text-center">
-                Resume Matcher
-              </a>
             </div>
           )}
         </>

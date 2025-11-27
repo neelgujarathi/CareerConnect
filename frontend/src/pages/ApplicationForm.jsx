@@ -7,14 +7,31 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ApplicationForm() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ name: "", email: "", resume: null });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    resume: null,
+  });
+
+  // ------------------ AUTO FILL USER DATA ------------------
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.name || "",
+        email: user.email || "",
+      }));
+    }
+  }, []);
 
   // ------------------ SOCKET SETUP ------------------
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
+
     socket.on("connect", () => socket.emit("registerUser", user._id));
 
     socket.on("receiveNotification", (data) => {
@@ -55,6 +72,7 @@ function ApplicationForm() {
       await axios.post("https://careerconnect-d6ke.onrender.com/api/apply", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       toast.success("✅ Application submitted successfully!", {
         position: "top-right",
         autoClose: 2500,
@@ -88,30 +106,37 @@ function ApplicationForm() {
         <h4 className="mb-4 text-center">Apply for this Job</h4>
 
         <form onSubmit={handleSubmit}>
+          {/* Full Name */}
           <div className="mb-3">
             <label className="form-label">Full Name</label>
             <input
               type="text"
               className="form-control"
               required
+              value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
+              readOnly // 👈 optional — makes field non-editable
             />
           </div>
 
+          {/* Email Address */}
           <div className="mb-3">
             <label className="form-label">Email Address</label>
             <input
               type="email"
               className="form-control"
               required
+              value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              readOnly // 👈 optional — makes field non-editable
             />
           </div>
 
+          {/* Upload Resume */}
           <div className="mb-3">
             <label className="form-label">Upload Resume (PDF/DOC)</label>
             <input

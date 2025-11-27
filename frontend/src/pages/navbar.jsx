@@ -24,8 +24,8 @@ function Navbar() {
 
       <div className="login">
         {user?.role === "jobseeker" && <a href="/ai-helper">AI Assistant</a>}
-        {!user && <a href="/register" className="RL">Register</a>}
-        {!user && <a href="/login" className="RL">Login</a>}
+        {!user && <a href="/register" className="RL">Sign Up</a>}
+        {!user && <a href="/login" className="RL">Sign In</a>}
         {user && (
           <>
             <span className="proname">Welcome, {user.name}</span>
