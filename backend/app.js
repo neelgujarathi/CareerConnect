@@ -44,6 +44,10 @@ const io = new Server(server, {
   },
 });
 
+require("dotenv").config();
+console.log("Gemini key loaded:", !!process.env.GEMINI_API_KEY);
+
+
 // ---------------- SOCKET.IO REAL-TIME NOTIFICATION ----------------
 const onlineUsers = {}; 
 

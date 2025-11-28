@@ -1,30 +1,28 @@
 const express = require("express");
-const { GoogleGenAI } = require("@google/genai");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 require("dotenv").config();
 
 const router = express.Router();
 const { matchResumePDF } = require("../controller/aiController");
 
+// ✅ Initialize Gemini client (new SDK)
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-const ai = new GoogleGenAI({
-  apiKey: GEMINI_API_KEY,
-  apiVersion: "v1alpha" 
-});
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 const callGemini = async (prompt) => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-    });
-    return response?.text || "No result from Gemini API";
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" }); // ✅ stable
+    const result = await model.generateContent(prompt);
+    return result.response.text();
   } catch (err) {
-    console.error("Error calling Gemini API:", err);
-    throw new Error("Error calling Gemini API");
+    console.error("Error calling Gemini API:", err.response?.data || err.message || err);
+    throw new Error("Gemini API request failed");
   }
 };
 
+// ======================= ROUTES =======================
+
+// 🔹 Generate Job Description
 router.post("/generate-jobdesc", async (req, res) => {
   const { role, skills, experience, perks } = req.body;
   if (!role) return res.status(400).json({ message: "Role is required" });
@@ -42,7 +40,7 @@ Benefits: ${perks || "not specified"}.`;
   }
 });
 
-// Summarize Job Description
+// 🔹 Summarize Job Description
 router.post("/summarize-jobdesc", async (req, res) => {
   const { jobDescription } = req.body;
   if (!jobDescription) return res.status(400).json({ message: "Job description required" });
@@ -57,7 +55,7 @@ router.post("/summarize-jobdesc", async (req, res) => {
   }
 });
 
-// Generate Interview Questions
+// 🔹 Generate Interview Questions
 router.post("/interview-questions", async (req, res) => {
   const { jobDescription } = req.body;
   if (!jobDescription) return res.status(400).json({ message: "Job description required" });
@@ -72,7 +70,7 @@ router.post("/interview-questions", async (req, res) => {
   }
 });
 
-// Generate Salary Guidance
+// 🔹 Generate Salary Guidance
 router.post("/salary-guidance", async (req, res) => {
   const { role, experience, companyType, city } = req.body;
 
@@ -82,14 +80,14 @@ router.post("/salary-guidance", async (req, res) => {
 
   const prompt = `
     You are an HR AI assistant.
-    Provide a realistic salary estimate for a candidate based on the following:
+    Provide a realistic salary estimate for a candidate based on:
     Role: ${role}
     Experience: ${experience}
     Company Type: ${companyType}
     City: ${city}
     
     Give the salary in INR, a reasonable range, and a short note explaining why this is a fair estimate.
-    Format it in a clear, professional way for display to the user.
+    Format it neatly and professionally.
   `;
 
   try {
@@ -100,6 +98,7 @@ router.post("/salary-guidance", async (req, res) => {
   }
 });
 
+// 🔹 Resume Match
 router.post("/resume-match", matchResumePDF);
 
 module.exports = router;

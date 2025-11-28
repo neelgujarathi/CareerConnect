@@ -1,9 +1,9 @@
 const multer = require("multer");
 const pdfParse = require("pdf-parse");
-const { GoogleGenAI } = require("@google/genai");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const upload = multer({ storage: multer.memoryStorage() });
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 function extractJSON(text) {
   if (!text) return null;
@@ -26,59 +26,61 @@ const matchResumePDF = [
 
       if (!jobDescription || !file)
         return res
-        .status(400)
-        .json({ message: "Job description & resume required" });
+          .status(400)
+          .json({ message: "Job description & resume required" });
 
-        const pdfData = await pdfParse(file.buffer);
-        const resumeText = pdfData.text;
+      // 🔹 Extract resume text
+      const pdfData = await pdfParse(file.buffer);
+      const resumeText = pdfData.text;
 
-        const prompt = `
-        You are a professional career AI assistant.
+      // 🔹 Build prompt
+      const prompt = `
+      You are a professional career AI assistant.
 
-        Job Description:
-        ${jobDescription}
+      Job Description:
+      ${jobDescription}
 
-        Candidate Resume:
-        ${resumeText}
+      Candidate Resume:
+      ${resumeText}
 
-        Task:
-        1. List the skills the candidate already has that match the job description.
-        2. List missing skills required for the job.
-        3. Suggest 5 concise improvements (1 line each) to make the resume closer to the job description.
-        4. Calculate match percentage based ONLY on skills (ignore experience years, location, soft skills).
+      Task:
+      1. List the skills the candidate already has that match the job description.
+      2. List missing skills required for the job.
+      3. Suggest 5 concise improvements (1 line each) to make the resume closer to the job description.
+      4. Calculate match percentage based ONLY on skills (ignore experience years, location, soft skills).
 
-        Output STRICTLY as JSON:
-        {
-          "matchedSkills": [],
-          "missingSkills": [],
-          "suggestions": [],
-          "percentageMatch": number
-        }
-        No extra explanation, no markdown, no text outside JSON.
-        `;
+      Output STRICTLY as JSON:
+      {
+        "matchedSkills": [],
+        "missingSkills": [],
+        "suggestions": [],
+        "percentageMatch": number
+      }
+      No extra explanation, no markdown, no text outside JSON.
+      `;
 
-        const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-        temperature: 0.2,
-      });
+      // 🔹 Call Gemini correctly
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const result = await model.generateContent(prompt);
+      const responseText = result.response.text();
 
-      let result = extractJSON(response.text);
-
-      if (!result) {
-        result = {
+      // 🔹 Parse JSON safely
+      let resultJSON = extractJSON(responseText);
+      if (!resultJSON) {
+        resultJSON = {
           matchedSkills: [],
           missingSkills: [],
-          suggestions: [response.text || "No suggestions available"],
+          suggestions: [responseText || "No suggestions available"],
           percentageMatch: 0,
         };
       }
 
+      // 🔹 Send response
       res.json({
-        matchedSkills: result.matchedSkills || [],
-        missingSkills: result.missingSkills || [],
-        suggestions: result.suggestions || [],
-        percentageMatch: result.percentageMatch || 0,
+        matchedSkills: resultJSON.matchedSkills || [],
+        missingSkills: resultJSON.missingSkills || [],
+        suggestions: resultJSON.suggestions || [],
+        percentageMatch: resultJSON.percentageMatch || 0,
       });
     } catch (err) {
       console.error("Resume match error:", err);
