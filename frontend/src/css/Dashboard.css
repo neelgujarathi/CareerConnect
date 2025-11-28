@@ -21,7 +21,7 @@
 .analysis
 {
   position: absolute !important;
-  top: 162px;
+  top: 151px;
   margin-left: 20px;
 }
 
@@ -30,10 +30,21 @@
   text-decoration: none;
   color: white;
   position: relative;
-  left: 600px;
+  left: 460px;
   width: 150px;
   height: 40px;
   background-color: rgb(24, 54, 206);
   padding: 5px;
   border-radius: 10px;
+}
+
+.jobsee
+{
+  display: flex;
+}
+
+.bhome
+{
+  position: relative;
+  left: 500px;
 }
