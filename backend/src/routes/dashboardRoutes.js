@@ -179,4 +179,41 @@ router.get("/dashboard/recruiter/analytics", async (req, res) => {
   }
 });
 
+router.delete("/users/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "Invalid user ID" });
+
+  try {
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Delete user first
+    await User.findByIdAndDelete(id);
+
+    // Delete associated data
+    if (user.role === "recruiter") {
+      const jobs = await Job.find({ recruiterId: id });
+      for (const job of jobs) {
+        await Application.deleteMany({ jobId: job._id });
+      }
+      await Job.deleteMany({ recruiterId: id });
+    } else if (user.role === "jobseeker") {
+      await Application.deleteMany({ userId: id });
+    }
+
+    // Cloudinary deletion asynchronously
+    if (user.profileImage?.public_id) {
+      cloudinary.uploader.destroy(user.profileImage.public_id).catch(err => 
+        console.warn("⚠️ Cloudinary deletion failed:", err.message)
+      );
+    }
+
+    res.json({ message: "Account and all related data deleted successfully" });
+  } catch (err) {
+    console.error("❌ Error deleting account:", err);
+    res.status(500).json({ message: "Server error while deleting account" });
+  }
+});
+
+
 module.exports = router;
