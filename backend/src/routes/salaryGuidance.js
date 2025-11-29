@@ -1,15 +1,12 @@
 const express = require("express");
 const router = express.Router();
 require("dotenv").config();
-const { GoogleGenAI } = require("@google/genai");
+const Groq = require("groq-sdk");
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// ✅ Initialize Groq client
+const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const ai = new GoogleGenAI({
-  apiKey: GEMINI_API_KEY,
-  apiVersion: "v1alpha" 
-});
-
+// ✅ Salary Guidance Route
 router.post("/salary-guidance", async (req, res) => {
   try {
     const { role, experience, companyType, city } = req.body;
@@ -18,31 +15,34 @@ router.post("/salary-guidance", async (req, res) => {
       return res.status(400).json({ message: "All fields are required." });
     }
 
+    // Build prompt
     const prompt = `
-      You are an HR AI assistant.
-      Provide a realistic salary estimate for a candidate based on the following information:
-      Role: ${role}
-      Experience: ${experience}
-      Company Type: ${companyType}
-      City: ${city}
+    You are an experienced HR AI assistant.
+    Provide a realistic salary estimate for a candidate based on the details below:
 
-      Give the salary in INR, a reasonable range, and a short note explaining why this is a fair estimate.
-      Format it in a clear, professional way for display to the user.
+    Role: ${role}
+    Experience: ${experience}
+    Company Type: ${companyType}
+    City: ${city}
+
+    Task:
+    1. Provide a salary range in INR (e.g., ₹6–10 LPA)
+    2. Write a short explanation of why this range is fair.
+    3. Format it neatly and professionally for the user.
     `;
 
-    const response = await ai.text.generate({
-      model: "models/text-bison-001",
-      prompt: prompt,
+    // Call Groq API (LLaMA 3)
+    const completion = await client.chat.completions.create({
+      model: "llama3-70b-8192", // best free model
+      messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
-      maxOutputTokens: 500
     });
 
-    const result = response.candidates[0].content;
+    const result = completion.choices[0].message.content;
 
     res.json({ result });
-
   } catch (err) {
-    console.error("Salary Guidance Error:", err);
+    console.error("💥 Salary Guidance Error:", err);
     res.status(500).json({ message: "Error generating salary guidance" });
   }
 });
