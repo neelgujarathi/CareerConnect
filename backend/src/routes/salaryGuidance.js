@@ -31,7 +31,7 @@ router.post("/salary-guidance", async (req, res) => {
 
     // 🧠 Call Groq API
     const completion = await client.chat.completions.create({
-      model: "llama3-70b-8192",
+      model: "llama-3.1-70b-versatile",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
     });
