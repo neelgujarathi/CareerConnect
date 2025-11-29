@@ -9,7 +9,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 async function callGroq(prompt) {
   try {
     const completion = await client.chat.completions.create({
-      model: "llama3-70b-8192",
+      model: "llama-3.1-70b-versatile",
       messages: [{ role: "user", content: prompt }],
     });
     return completion.choices?.[0]?.message?.content || "";
