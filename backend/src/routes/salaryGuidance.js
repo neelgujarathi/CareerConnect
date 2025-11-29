@@ -3,7 +3,7 @@ const router = express.Router();
 require("dotenv").config();
 const Groq = require("groq-sdk");
 
-// ✅ Initialize Groq client
+// ✅ Initialize Groq client safely
 const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // ✅ Salary Guidance Route
@@ -11,35 +11,32 @@ router.post("/salary-guidance", async (req, res) => {
   try {
     const { role, experience, companyType, city } = req.body;
 
-    // Validate required fields
     if (!role || !experience || !companyType || !city) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    // Prompt for AI
+    // 🧠 Build prompt
     const prompt = `
     You are an HR AI assistant.
-    Provide a realistic salary estimate for a candidate:
+    Provide a realistic salary estimate for:
     - Role: ${role}
     - Experience: ${experience}
     - Company Type: ${companyType}
     - City: ${city}
 
-    Respond with:
-    1. A salary range in INR (e.g., ₹6–10 LPA)
-    2. A short explanation for this estimate
-    Format it neatly and clearly.
+    Return result in this format:
+    Salary Range: ₹X–₹Y LPA
+    Reason: (1–2 lines short explanation)
     `;
 
-    // 🧠 Call Groq API (LLaMA 3)
+    // 🧠 Call Groq API
     const completion = await client.chat.completions.create({
       model: "llama3-70b-8192",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
     });
 
-    // ✅ Extract AI response
-    const result = completion.choices?.[0]?.message?.content || "No response received";
+    const result = completion.choices?.[0]?.message?.content || "No response";
 
     return res.json({ result });
   } catch (err) {
